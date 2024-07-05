@@ -57,7 +57,7 @@ function storeMessage(message) {
   const expiryTime = 7 * 24 * 60 * 60;
 
   redis.set(hashKey, messageStr);
-  redis.sadd(recipientSetKey, hashKey);
+  redis.sAdd(recipientSetKey, hashKey);
   redis.expire(hashKey, expiryTime);
   redis.expire(recipientSetKey, expiryTime);
 }
@@ -65,7 +65,7 @@ function storeMessage(message) {
 function searchByRecipient(recipient) {
   const recipientSetKey = `recipient:${recipient}`;
 
-  redis.smembers(recipientSetKey, (hashKeys) => {
+  redis.sMembers(recipientSetKey, (hashKeys) => {
     const messages = [];
     hashKeys.forEach((hashKey) => {
       redis.get(hashKey, (messageStr) => {
