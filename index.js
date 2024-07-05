@@ -1,6 +1,7 @@
 import "dotenv/config";
 import Express, { request } from "express";
 import { createClient } from "redis";
+import { scheduleJob } from "node-schedule";
 
 const express = new Express();
 const redis = createClient({
@@ -9,6 +10,21 @@ const redis = createClient({
 
 redis.on("error", err => console.error("Redis Client Error", err));
 await redis.connect();
+
+// server list sync
+// every hour
+scheduleJob("0 * * * *", () => {
+  const serversSetKey = "servers";
+  redis.sMembers(serversSetKey, (serverStrings) => {
+    let servers = serverStrings.map(JSON.parse);
+  });
+});
+
+// message sync
+// every minute
+scheduleJob("* * * * *", () => {
+
+});
 
 // TODO: more error handling and HTTP response codes
 // TODO: separate server into multiple files
