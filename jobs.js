@@ -1,4 +1,7 @@
 import { scheduleJob } from "node-schedule";
+import axios from "axios";
+
+import { redis } from "./index.js"
 
 export function scheduleJobs() {
   // server list sync

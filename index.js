@@ -5,7 +5,8 @@ import { createClient } from "redis";
 import { scheduleJobs } from "./jobs.js";
 
 const express = new Express();
-const redis = createClient({
+
+export const redis = createClient({
   url: process.env["REDIS_URL"]
 });
 
