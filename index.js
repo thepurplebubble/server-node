@@ -1,5 +1,6 @@
 import "dotenv/config";
 import Express, { request } from "express";
+import bodyParser from "body-parser";
 import { createClient } from "redis";
 
 import { scheduleJobs } from "./jobs.js";
@@ -12,6 +13,7 @@ import {
 } from "./util.js";
 
 const express = new Express();
+express.use(bodyParser.json());
 
 export const redis = createClient({
   url: process.env["REDIS_URL"],
