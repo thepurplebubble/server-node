@@ -65,6 +65,7 @@ function syncServers(servers) {
       }
     });
   });
+  return { servers: response };
 }
 
 function syncMessages(messages) {
@@ -81,7 +82,7 @@ function syncMessages(messages) {
       }
     });
   });
-  return response;
+  return { messages: response };
 }
 
 function storeMessage(message) {
