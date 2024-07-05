@@ -30,7 +30,7 @@ express.listen(process.env["PORT"], () => {
   console.log(`Purple Bubble Server is now listening on port ${process.env["PORT"]}`);
 });
 
-function storeMessage(message, callback) {
+function storeMessage(message) {
   const recipient = message.recipient;
   const hashKey = message.hash;
   const messageStr = JSON.stringify(message);
