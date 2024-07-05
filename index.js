@@ -10,6 +10,8 @@ const redis = createClient({
 redis.on("error", err => console.error("Redis Client Error", err));
 await redis.connect();
 
+// TODO: more error handling and HTTP response codes
+// TODO: separate server into multiple files
 express.post("/fetch", (req, res) => {
   if (req.body.recipient) {
     res.send({
@@ -36,11 +38,11 @@ express.post("/send", (req, res) => {
 });
 
 express.post("/sync/servers", (req, res) => {
-  
+  // TODO: Server list sync
 });
 
 express.post("/sync/messages", (req, res) => {
-  
+  // TODO: Saved messages sync
 });
 
 express.listen(process.env["PORT"], () => {
