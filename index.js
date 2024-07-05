@@ -23,11 +23,30 @@ scheduleJob("0 * * * *", () => {
 // message sync
 // every minute
 scheduleJob("* * * * *", () => {
-
+  const serversSetKey = "servers";
+  redis.sMembers(serversSetKey, (serverStrings) => {
+    let servers = serverStrings.map(JSON.parse);
+    servers.forEach((server) => {
+      axios.post(`http://${server.ip}:${server.port}/sync/messages`, {
+        messages: redis.keys("hash:*").map((hash) => hash.substring(5))
+      })
+      .then((hashes) => {
+        axios.post(`http://${server.ip}:${server.port}/fetch`, {
+          hashes: hashes.data.messages
+        })
+        .then((messages) => {
+          messages.forEach((message) => {
+            storeMessage(message.data);
+          })
+        });
+      });
+    });
+  });
 });
 
 // TODO: more error handling and HTTP response codes
 // TODO: separate server into multiple files
+// TODO: typescript
 express.post("/fetch", (req, res) => {
   if (req.body.recipient) {
     res.json({
@@ -93,7 +112,7 @@ function syncMessages(messages) {
       }
     });
     messages.forEach((hash) => {
-      if (!hashes.includes(`hash:{hash}`)) {
+      if (!hashes.includes(`hash:${hash}`)) {
         redis.sAdd("messages_to_fetch", hash);
       }
     });
