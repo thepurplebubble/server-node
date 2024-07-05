@@ -14,7 +14,7 @@ await redis.connect();
 // TODO: separate server into multiple files
 express.post("/fetch", (req, res) => {
   if (req.body.recipient) {
-    res.send({
+    res.json({
       messages: searchByRecipient(req.body.recipient)
     });
 
@@ -23,7 +23,7 @@ express.post("/fetch", (req, res) => {
     req.body.hashes.forEach((hash) => {
       messages.add(searchByHash(hash));
     });
-    res.send({
+    res.json({
       messages: messages
     });
 
@@ -38,7 +38,7 @@ express.post("/send", (req, res) => {
 });
 
 express.post("/sync/servers", (req, res) => {
-  res.send(syncServers(req.body.servers));
+  res.json(syncServers(req.body.servers));
 });
 
 express.post("/sync/messages", (req, res) => {
