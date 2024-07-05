@@ -17,6 +17,14 @@ scheduleJob("0 * * * *", () => {
   const serversSetKey = "servers";
   redis.sMembers(serversSetKey, (serverStrings) => {
     let servers = serverStrings.map(JSON.parse);
+    servers.forEach((server) => {
+      axios.post(`http://${server.ip}:${server.port}/sync/servers`, {
+        servers: redis.sMembers("serversSetKey").map(JSON.parse)
+      })
+      .then((servers) => {
+        syncServers(servers.data);
+      });
+    });
   });
 });
 
@@ -37,7 +45,7 @@ scheduleJob("* * * * *", () => {
         .then((messages) => {
           messages.forEach((message) => {
             storeMessage(message.data);
-          })
+          });
         });
       });
     });
