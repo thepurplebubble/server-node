@@ -15,7 +15,8 @@ express.post("/fetch", (req, res) => {
 });
 
 express.post("/send", (req, res) => {
-  
+  storeMessage(req.body);
+  res.send("200 OK");
 });
 
 express.post("/sync/servers", (req, res) => {
