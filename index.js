@@ -1,7 +1,8 @@
 import "dotenv/config";
 import Express, { request } from "express";
 import { createClient } from "redis";
-import { scheduleJob } from "node-schedule";
+
+import { scheduleJobs } from "./jobs.js";
 
 const express = new Express();
 const redis = createClient({
@@ -11,46 +12,7 @@ const redis = createClient({
 redis.on("error", err => console.error("Redis Client Error", err));
 await redis.connect();
 
-// server list sync
-// every hour
-scheduleJob("0 * * * *", () => {
-  const serversSetKey = "servers";
-  redis.sMembers(serversSetKey, (serverStrings) => {
-    let servers = serverStrings.map(JSON.parse);
-    servers.forEach((server) => {
-      axios.post(`http://${server.ip}:${server.port}/sync/servers`, {
-        servers: redis.sMembers("serversSetKey").map(JSON.parse)
-      })
-      .then((servers) => {
-        syncServers(servers.data);
-      });
-    });
-  });
-});
-
-// message sync
-// every minute
-scheduleJob("* * * * *", () => {
-  const serversSetKey = "servers";
-  redis.sMembers(serversSetKey, (serverStrings) => {
-    let servers = serverStrings.map(JSON.parse);
-    servers.forEach((server) => {
-      axios.post(`http://${server.ip}:${server.port}/sync/hashes`, {
-        hashes: redis.keys("hash:*").map((hash) => hash.substring(5))
-      })
-      .then((hashes) => {
-        axios.post(`http://${server.ip}:${server.port}/fetch`, {
-          hashes: hashes.data.hashes
-        })
-        .then((messages) => {
-          messages.forEach((message) => {
-            storeMessage(message.data);
-          });
-        });
-      });
-    });
-  });
-});
+scheduleJobs();
 
 // TODO: more error handling and HTTP response codes
 // TODO: separate server into multiple files
