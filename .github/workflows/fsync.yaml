@@ -1,0 +1,19 @@
+name: fsync
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/30 * * * *' # Runs every 30 minutes
+
+jobs:
+  file_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PBB_TOKEN }}
+      - name: gh_fsync
+        uses: gleich/gh_fsync@master

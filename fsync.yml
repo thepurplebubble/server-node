@@ -1,0 +1,39 @@
+commit_message: 🔄 Update file via sync
+
+# Syncs repos from thepurplebubble/template
+files:
+  # root
+  - path: CONTRIBUTING.md
+    source: https://github.com/thepurplebubble/template/blob/main/CONTRIBUTING.md
+  - path: CODE_OF_CONDUCT.md
+    source: https://github.com/thepurplebubble/template/blob/main/CODE_OF_CONDUCT.md
+  - path: LICENSE.md
+    source: https://github.com/thepurplebubble/template/blob/main/LICENSE.md
+    # .github
+  - path: /.github/SECURITY.md
+    source: https://github.com/thepurplebubble/template/blob/main/.github/SECURITY.md
+  - path: /.github/PULL_REQUEST_TEMPLATE.md
+    source: https://github.com/thepurplebubble/template/blob/main/.github/PULL_REQUEST_TEMPLATE.md
+  - path: /.github/FUNDING.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/FUNDING.yml
+  - path: /.github/CONTRIBUTORS.md
+    source: https://github.com/thepurplebubble/template/blob/main/.github/CONTRIBUTORS.md
+  - path: /.github/CODEOWNERS
+    source: https://github.com/thepurplebubble/template/blob/main/.github/CODEOWNERS
+  - path: /.github/AUTHORS.md
+    source: https://github.com/thepurplebubble/template/blob/main/.github/AUTHORS.md
+  - path: /.github/ACKNOWLEDGEMENTS.md
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ACKNOWLEDGMENTS.md
+  # issue templates
+  - path: /.github/ISSUE_TEMPLATE/bugreport.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ISSUE_TEMPLATE/bugreport.yml
+  - path: /.github/ISSUE_TEMPLATE/chore.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ISSUE_TEMPLATE/chore.yml
+  - path: /.github/ISSUE_TEMPLATE/config.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ISSUE_TEMPLATE/config.yml
+  - path: /.github/ISSUE_TEMPLATE/documentation.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ISSUE_TEMPLATE/documentation.yml
+  - path: /.github/ISSUE_TEMPLATE/feature_request.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ISSUE_TEMPLATE/feature_request.yml
+  - path: /.github/ISSUE_TEMPLATE/other.yml
+    source: https://github.com/thepurplebubble/template/blob/main/.github/ISSUE_TEMPLATE/other.yml
