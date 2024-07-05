@@ -38,7 +38,7 @@ express.post("/send", (req, res) => {
 });
 
 express.post("/sync/servers", (req, res) => {
-  // TODO: Server list sync
+  res.send(syncServers(req.body.servers));
 });
 
 express.post("/sync/messages", (req, res) => {
@@ -48,6 +48,24 @@ express.post("/sync/messages", (req, res) => {
 express.listen(process.env["PORT"], () => {
   console.log(`Purple Bubble Server is now listening on port ${process.env["PORT"]}`);
 });
+
+function syncServers(servers) {
+  const serversSetKey = "servers";
+  const response = [];
+  redis.sMembers(serversSetKey, (myServerStrings) => {
+    let myServers = myServerStrings.map(JSON.parse);
+    myServers.forEach((server) => {
+      if (!servers.includes(server)) {
+        response.push(server);
+      }
+    });
+    servers.forEach((server) => {
+      if (!myServers.includes(server)) {
+        redis.sAdd(serversSetKey, server);
+      }
+    });
+  });
+}
 
 function storeMessage(message) {
   const recipient = message.recipient;
