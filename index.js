@@ -95,6 +95,7 @@ function storeMessage(message) {
   redis.set(hashKey, messageStr);
   redis.sAdd(recipientSetKey, hashKey);
   redis.expire(hashKey, expiryTime);
+  // TODO: remove items from the recipient set as they're expired. This expiry logic does not work and the set will infinitely grow.
   redis.expire(recipientSetKey, expiryTime);
 }
 
