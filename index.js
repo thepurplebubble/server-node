@@ -42,7 +42,7 @@ express.post("/sync/servers", (req, res) => {
 });
 
 express.post("/sync/messages", (req, res) => {
-  // TODO: Saved messages sync
+  res.json(syncMessages(req.body.messages));
 });
 
 express.listen(process.env["PORT"], () => {
@@ -67,9 +67,26 @@ function syncServers(servers) {
   });
 }
 
+function syncMessages(messages) {
+  const response = [];
+  redis.keys("hash:*", (hashes) => {
+    hashes.forEach((hash) => {
+      if (!messages.includes(hash)) {
+        response.push(hash.substring(5));
+      }
+    });
+    messages.forEach((hash) => {
+      if (!hashes.includes(`hash:{hash}`)) {
+        redis.sAdd("messages_to_fetch", hash);
+      }
+    });
+  });
+  return response;
+}
+
 function storeMessage(message) {
   const recipient = message.recipient;
-  const hashKey = message.hash;
+  const hashKey = `hash:${message.hash}`;
   const messageStr = JSON.stringify(message);
   const recipientSetKey = `recipient:${recipient}`;
   const expiryTime = 7 * 24 * 60 * 60;
@@ -95,8 +112,10 @@ function searchByRecipient(recipient) {
   });
 }
 
-function searchByHash(hashKey) {
-  redis.get(hashKey, (messageStr) => {
+function searchByHash(hash) {
+  const hashKey = `hash:${hash}`;
+
+  redis.get(`hash:${hashKey}`, (messageStr) => {
     if (messageStr) return JSON.parse(messageStr);
     else return null;
   });
