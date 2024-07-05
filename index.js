@@ -11,7 +11,23 @@ redis.on("error", err => console.error("Redis Client Error", err));
 await redis.connect();
 
 express.post("/fetch", (req, res) => {
+  if (req.body.recipient) {
+    res.send({
+      messages: searchByRecipient(req.body.recipient)
+    });
 
+  } else if (req.body.hashes) {
+    messages = [];
+    req.body.hashes.forEach((hash) => {
+      messages.add(searchByHash(hash));
+    });
+    res.send({
+      messages: messages
+    });
+
+  } else {
+    res.status(400).send("400 Bad Request");
+  }
 });
 
 express.post("/send", (req, res) => {
@@ -48,14 +64,14 @@ function searchByRecipient(recipient) {
   const recipientSetKey = `recipient:${recipient}`;
 
   redis.smembers(recipientSetKey, (hashKeys) => {
-    const results = [];
+    const messages = [];
     hashKeys.forEach((hashKey) => {
       redis.get(hashKey, (messageStr) => {
-        if (messageStr) results.push(JSON.parse(messageStr));
+        if (messageStr) messages.push(JSON.parse(messageStr));
       });
     });
 
-    return results;
+    return messages;
   });
 }
 
