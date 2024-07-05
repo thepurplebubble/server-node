@@ -23,7 +23,6 @@ await redis.connect();
 scheduleJobs();
 
 // TODO: more error handling and HTTP response codes
-// TODO: separate server into multiple files
 // TODO: typescript
 express.post("/fetch", (req, res) => {
   if (req.body.recipient) {
