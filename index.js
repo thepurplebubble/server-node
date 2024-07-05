@@ -35,12 +35,12 @@ scheduleJob("* * * * *", () => {
   redis.sMembers(serversSetKey, (serverStrings) => {
     let servers = serverStrings.map(JSON.parse);
     servers.forEach((server) => {
-      axios.post(`http://${server.ip}:${server.port}/sync/messages`, {
-        messages: redis.keys("hash:*").map((hash) => hash.substring(5))
+      axios.post(`http://${server.ip}:${server.port}/sync/hashes`, {
+        hashes: redis.keys("hash:*").map((hash) => hash.substring(5))
       })
       .then((hashes) => {
         axios.post(`http://${server.ip}:${server.port}/fetch`, {
-          hashes: hashes.data.messages
+          hashes: hashes.data.hashes
         })
         .then((messages) => {
           messages.forEach((message) => {
@@ -84,8 +84,8 @@ express.post("/sync/servers", (req, res) => {
   res.json(syncServers(req.body.servers));
 });
 
-express.post("/sync/messages", (req, res) => {
-  res.json(syncMessages(req.body.messages));
+express.post("/sync/hashes", (req, res) => {
+  res.json(syncHashes(req.body.hashes));
 });
 
 express.listen(process.env["PORT"], () => {
@@ -111,21 +111,16 @@ function syncServers(servers) {
   return { servers: response };
 }
 
-function syncMessages(messages) {
+function syncHashes(hashes) {
   const response = [];
-  redis.keys("hash:*", (hashes) => {
-    hashes.forEach((hash) => {
-      if (!messages.includes(hash)) {
+  redis.keys("hash:*", (myHashes) => {
+    myHashes.forEach((hash) => {
+      if (!hashes.includes(hash)) {
         response.push(hash.substring(5));
       }
     });
-    messages.forEach((hash) => {
-      if (!hashes.includes(`hash:${hash}`)) {
-        redis.sAdd("messages_to_fetch", hash);
-      }
-    });
   });
-  return { messages: response };
+  return { hashes: response };
 }
 
 function storeMessage(message) {
