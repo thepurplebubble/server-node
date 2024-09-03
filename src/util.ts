@@ -1,5 +1,5 @@
-import { redis } from "./index.ts";
-import { Message, Server } from "./types.ts";
+import { redis } from "./index.js";
+import { Message, Server } from "./types.js";
 
 /**
  * Synchronizes the servers with the provided list of servers.
@@ -9,7 +9,7 @@ import { Message, Server } from "./types.ts";
  * @throws If there is an error while synchronizing the servers.
  */
 export async function syncServers(
-  servers: Server[]
+  servers: Server[],
 ): Promise<{ servers: Server[] }> {
   const serversSetKey = "servers";
   const response: Server[] = [];
@@ -46,7 +46,7 @@ export async function syncServers(
  * @throws If there is an error while synchronizing the hashes.
  */
 export async function syncHashes(
-  hashes: string[]
+  hashes: string[],
 ): Promise<{ hashes: string[] }> {
   const response: string[] = [];
 
@@ -77,7 +77,6 @@ export function storeMessage(message) {
   const messageStr = JSON.stringify(message);
   const recipientSetKey = `recipient:${recipient}`;
   const expiryTime = 7 * 24 * 60 * 60;
-
   redis.set(hashKey, messageStr);
   redis.sAdd(recipientSetKey, hashKey);
   redis.expire(hashKey, expiryTime);
@@ -106,7 +105,7 @@ export async function searchByRecipient(recipient: string): Promise<Message[]> {
         } catch (parseError) {
           console.error(
             `Error parsing message for hashKey ${hashKey}:`,
-            parseError
+            parseError,
           );
         }
       }

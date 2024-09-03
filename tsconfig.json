@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "allowJs": true,
     "target": "ESNext",
-    "module": "NodeNext",
-    "noEmit": true,
-    "allowImportingTsExtensions": true
+    "module": "NodeNext"
   },
-  "include": ["./src/**/*", "tests/sum.ts"]
+  "include": ["./src/**/*"]
 }

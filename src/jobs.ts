@@ -1,8 +1,8 @@
 import { scheduleJob } from "node-schedule";
 import axios from "axios";
-import { redis } from "./index.ts";
-import { syncServers, storeMessage } from "./util.ts";
-import { Server, Message } from "./types.ts";
+import { redis } from "./index.js";
+import { syncServers, storeMessage } from "./util.js";
+import { Server, Message } from "./types.js";
 
 export function scheduleJobs() {
   // Synchornize servers every hour
@@ -15,12 +15,12 @@ export function scheduleJobs() {
       for (const server of servers) {
         const allServerStrings = await redis.sMembers(serversSetKey);
         const allServers: Server[] = allServerStrings.map((str) =>
-          JSON.parse(str)
+          JSON.parse(str),
         );
 
         const response = await axios.post<Server[]>(
           `http://${server.ip}:${server.port}/sync/servers`,
-          { servers: allServers }
+          { servers: allServers },
         );
 
         await syncServers(response.data);
@@ -43,12 +43,12 @@ export function scheduleJobs() {
 
         const hashesResponse = await axios.post<{ hashes: string[] }>(
           `http://${server.ip}:${server.port}/sync/hashes`,
-          { hashes }
+          { hashes },
         );
 
         const messagesResponse = await axios.post<Message[]>(
           `http://${server.ip}:${server.port}/fetch`,
-          { hashes: hashesResponse.data.hashes }
+          { hashes: hashesResponse.data.hashes },
         );
 
         for (const message of messagesResponse.data) {

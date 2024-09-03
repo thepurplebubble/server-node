@@ -12,7 +12,6 @@ import {
   searchByHash,
 } from "./util.js";
 
-
 const app = express();
 app.use(bodyParser.json());
 
@@ -35,25 +34,29 @@ scheduleJobs();
 
 // TODO: more error handling and HTTP response codes
 
-app.post("/fetch", (req, res) => {
-  if (req.body.recipient) {
-    res.json({
-      messages: searchByRecipient(req.body.recipient),
-    });
-  } else if (req.body.hashes) {
-    const messages = [];
-    req.body.hashes.forEach((hash: string) => {
-      messages.push(searchByHash(hash));
-    });
-    res.json({
-      messages: messages,
-    });
-  } else {
-    res.status(400).send("400 Bad Request");
+app.post("/fetch", async (req, res) => {
+  try {
+    if (req.body.recipient) {
+      console.log("Fetching messages for recipient", req.body.recipient);
+      const messages = await searchByRecipient(req.body.recipient);
+      res.json({ messages });
+    } else if (req.body.hashes) {
+      console.log("Fetching messages by hashes", req.body.hashes);
+      const messages = await Promise.all(req.body.hashes.map(searchByHash));
+      res.json({ messages });
+    } else {
+      res.status(400).send("400 Bad Request");
+    }
+  } catch (error) {
+    console.error("Error in /fetch endpoint:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching messages" });
   }
 });
 
 app.post("/send", (req, res) => {
+  console.log("Storing message", req.body);
   storeMessage(req.body);
   res.send("200 OK");
 });
@@ -68,6 +71,6 @@ app.post("/sync/hashes", (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(
-    `Purple Bubble Server is now listening on port ${process.env.PORT}`
+    `Purple Bubble Server is now listening on port ${process.env.PORT}`,
   );
 });
