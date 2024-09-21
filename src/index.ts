@@ -1,7 +1,8 @@
-import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
 import { createClient } from "redis";
+import * as dotenv from 'dotenv'; 
+dotenv.config();
 
 import { scheduleJobs } from "./jobs.js";
 import {
