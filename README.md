@@ -69,7 +69,7 @@ yarn build
 
 Then start the server using node:
 
-```
+```bash
 node dist/index.js
 ```
 
