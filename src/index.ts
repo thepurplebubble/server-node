@@ -58,7 +58,7 @@ app.post("/fetch", async (req, res) => {
 app.post("/send", (req, res) => {
   console.log("Storing message", req.body);
   storeMessage(req.body);
-  res.send("200 OK");
+  res.status(200).send("ok");
 });
 
 app.post("/sync/servers", (req, res) => {
