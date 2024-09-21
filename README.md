@@ -100,7 +100,7 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE)
 
 For bug reports and feature requests, please use the [GitHub Issues](https://github.com/thepurplebubble/server-node/issues) page.
 
-For other inquiries, please reach out to [project maintainer's email] (TODO: Add contact email).
+For other inquiries, please reach out to [team@purplebubble.org](mailto:team@purplebubble.org).
 
 ---
 
