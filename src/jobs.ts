@@ -12,12 +12,9 @@ export function scheduleJobs() {
       const serverStrings = await redis.sMembers(serversSetKey);
       const servers: Server[] = serverStrings.map((str) => JSON.parse(str));
 
+      const allServerStrings = await redis.sMembers(serversSetKey);
+      const allServers: Server[] = allServerStrings.map((str) => JSON.parse(str));
       for (const server of servers) {
-        const allServerStrings = await redis.sMembers(serversSetKey);
-        const allServers: Server[] = allServerStrings.map((str) =>
-          JSON.parse(str),
-        );
-
         const response = await axios.post<Server[]>(
           `http://${server.ip}:${server.port}/sync/servers`,
           { servers: allServers },
