@@ -23,11 +23,13 @@ Purple Bubble Server is a Node.js implementation of a decentralized, secure mess
 
    ```bash
    git clone git@github.com:thepurplebubble/server-node.git
+   ```
+
 ## Development
 
 To start the server in development mode, run the dev script:
 
-```bash
+````bash
 pnpm run dev
 
 ## Usage
@@ -38,7 +40,7 @@ Run the build script with your favorite package manager:
 
 ```bash
 pnpm run build
-```
+````
 
 Then start the server using node:
 
