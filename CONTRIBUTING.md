@@ -1,4 +1,3 @@
-<!-- omit in toc -->
 
 # Contributing to Purple Bubble
 
