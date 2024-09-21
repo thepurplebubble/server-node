@@ -37,7 +37,7 @@ To start the server (Production mode):
 Run the build script with your favorite package manager:
 
 ```bash
-yarn build
+pnpm run build
 ```
 
 Then start the server using node:
