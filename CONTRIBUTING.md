@@ -93,8 +93,6 @@ Once it's filed:
 
 This section guides you through submitting an enhancement suggestion for Purple Bubble, **including completely new features and minor improvements to existing functionality**. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.
 
-<!-- omit in toc -->
-
 #### Before Submitting an Enhancement
 
 - Make sure that you are using the latest version.
