@@ -35,7 +35,7 @@ export function scheduleJobs() {
       const servers: Server[] = serverStrings.map((str) => JSON.parse(str));
 
       for (const server of servers) {
-        const hashKeys = await redis.keys("hash:*");
+        const { keys: hashKeys } = await redis.scan(0, { MATCH: "hash:*" });
         const hashes = hashKeys.map((hash) => hash.substring(5));
 
         const hashesResponse = await axios.post<{ hashes: string[] }>(
