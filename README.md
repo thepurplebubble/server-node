@@ -63,7 +63,7 @@ To start the server (Production mode):
 
 Run the build script with your favorite package manager:
 
-```
+```bash
 yarn build
 ```
 
