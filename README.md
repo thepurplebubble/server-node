@@ -21,35 +21,8 @@ Purple Bubble Server is a Node.js implementation of a decentralized, secure mess
 
 1. Clone the repository:
 
-   ```
-   git clone https://github.com/thepurplebubble/server-node.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```
-   cd server-node
-   ```
-
-3. Install dependencies:
-
-   ```
-   npm install
-   ```
-
-   or with Yarn:
-
-   ```
-   yarn install
-   ```
-
-4. Create a `.env` file in the root directory with the following content:
-   ```
-   PORT=8080
-   REDIS_URL=redis://localhost:6379
-   ```
-   Adjust these values as needed for your environment.
-
+   ```bash
+   git clone git@github.com:thepurplebubble/server-node.git
 ## Development
 
 To start the server in development mode, run the dev script:
