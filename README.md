@@ -54,9 +54,8 @@ Purple Bubble Server is a Node.js implementation of a decentralized, secure mess
 
 To start the server in development mode, run the dev script:
 
-```
-yarn dev
-```
+```bash
+pnpm run dev
 
 ## Usage
 
