@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { createClient } from "redis";
+import "./config";
 import * as dotenv from 'dotenv'; 
 dotenv.config();
 
@@ -15,14 +16,6 @@ import {
 
 const app = express();
 app.use(bodyParser.json());
-
-// Ensure environment variables are set, otherwise throw an error
-if (!process.env.REDIS_URL) {
-  throw new Error("REDIS_URL environment variable is required");
-}
-if (!process.env.PORT) {
-  throw new Error("PORT environment variable is required");
-}
 
 export const redis = createClient({
   url: process.env.REDIS_URL,
