@@ -1,6 +1,6 @@
 const requiredEnvVars = {
-  REDIS_URL: "Port number for the server",
-  PORT: "URL for the database connection",
+  REDIS_URL: "URL for the database connection",
+  PORT: "Port number for the server",
 };
 
 function validateEnv() {
