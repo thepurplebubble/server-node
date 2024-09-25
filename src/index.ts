@@ -39,7 +39,7 @@ app.post("/fetch", async (req, res) => {
       const messages = await Promise.all(req.body.hashes.map(searchByHash));
       res.json({ messages });
     } else {
-      res.status(400).send("400 Bad Request");
+      res.status(400).send("Bad Request");
     }
   } catch (error) {
     console.error("Error in /fetch endpoint:", error);
