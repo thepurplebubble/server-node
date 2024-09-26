@@ -1,0 +1,40 @@
+{
+  "name": "pb-server",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thepurplebubble/server-node.git"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/thepurplebubble/server-node/issues"
+  },
+  "homepage": "https://github.com/thepurplebubble/server-node#readme",
+  "type": "module",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node-schedule": "^2.1.7",
+    "axios": "^1.7.4",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "node-schedule": "^2.1.1",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@jest/globals": "^29.7.0",
+    "jest": "^29.7.0",
+    "prettier": "3.3.3",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}
