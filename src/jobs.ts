@@ -1,6 +1,6 @@
 import { scheduleJob } from "node-schedule";
 import axios from "axios";
-import { redis } from "./index.js";
+import { redis } from "./index";
 import { syncServers, storeMessage } from "./util";
 import { Server, Message } from "./types";
 
