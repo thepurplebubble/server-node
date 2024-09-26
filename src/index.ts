@@ -5,7 +5,7 @@ import "./config";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import { scheduleJobs } from "./jobs.js";
+import { scheduleJobs } from "./jobs";
 import {
   syncServers,
   syncHashes,
