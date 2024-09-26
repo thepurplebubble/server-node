@@ -1,8 +1,8 @@
 import { scheduleJob } from "node-schedule";
 import axios from "axios";
 import { redis } from "./index.js";
-import { syncServers, storeMessage } from "./util.js";
-import { Server, Message } from "./types.js";
+import { syncServers, storeMessage } from "./util";
+import { Server, Message } from "./types";
 
 export function scheduleJobs() {
   // Synchornize servers every hour
